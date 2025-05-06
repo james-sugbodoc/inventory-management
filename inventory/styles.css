@@ -1,0 +1,132 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F9FAFB;
+    margin: 0;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: #F3F4F6;
+    padding: 20px;
+    border-right: 1px solid #E5E7EB;
+    transition: all 0.3s;
+    flex-direction: column;
+}
+
+.sidebar-collapsed {
+    width: 70px !important;
+}
+
+.sidebar-collapsed .nav-link {
+    font-size: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.sidebar-collapsed .nav-link::before {
+    font-size: 16px;
+}
+
+.sidebar .nav-link.active {
+    background-color: #4454C3;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    color: white; 
+}
+
+.sidebar .nav-link {
+    color: #374151;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #e9ecef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.sidebar .bottom-links {
+    margin-top: auto;
+    padding-top: 30px;
+    border-top: 1px solid #ddd;
+}
+
+.topbar {
+    margin-left: 240px;
+    background-color: #4454C3;
+    padding: 10px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: margin-left 0.3s;
+}
+
+.topbar-collapsed {
+    margin-left: 70px !important;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 30px;
+    transition: margin-left 0.3s;
+}
+
+.content-collapsed {
+    margin-left: 70px !important;
+}
+
+.table thead {
+    background-color: #F3F4F6;
+}
+
+.icon-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.icon-btn i {
+    font-size: 16px;
+}
+
+.sidebar .nav-link.active img {
+    filter: invert(100%) brightness(100%) grayscale(100%);  
+}
+
+.clinic-selector {
+    display: flex;
+    padding: 8px 12px;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    background: #FFF;   
+    color: #424E79;
+}
+
+.clinic-logo {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.dropdown-menu {
+    min-width: 180px;
+}

@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prescription</title>
+        <link href="dist/output.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script> 
+          tailwind.config = {
+              theme: {
+              extend: {
+                  colors: {
+                  primary: '#4454C3',
+                  danger: '#FD7F7F',
+                  warning: '#F59E0B',
+                  success: '#10B981',
+                  red: '#EF4444',
+                  faded_red: '#FFEFEF'
+                  }
+              }
+              }
+          } 
+        </script>
+      </head>
+      <body class="bg-gray-50 flex h-screen">
+        <!-- Collapsible Sidebar -->
+        <div class="bg-gray-200 text-white w-64 md:w-20 lg:w-64 transition-all duration-300 ease-in-out flex-shrink-0">
+          <div class="p-4 flex items-center justify-between md:justify-center lg:justify-between">
+            <span class="text-xl font-bold hidden md:hidden lg:inline"> <img src="assets/svg/logo.png" alt="Menu" class="w-30 h-10"> </span>
+            <button id="toggleSidebar" class="text-white focus:outline-none hidden md:block lg:hidden">
+                <img src="assets/svg/menu.svg" alt="Menu" class="w-6 h-6">
+            </button>
+            <button id="toggleSidebarDesktop" class="text-white focus:outline-none hidden md:hidden lg:block">
+                <img src="assets/svg/menu.svg" alt="Toggle Sidebar" class="w-9 h-9 toggle-icon">
+                <img src="assets/svg/menu.svg" alt="Toggle Sidebar" class="w-4 h-4 toggle-icon hidden">
+            </button>
+          </div>
+          <nav class="mt-6">
+            <!-- Dashboard Link -->
+            <a href="admin_dashboard.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+              <img src="assets/svg/dashboard.svg" class="[fill:currentColor] w-5 h-5 mr-3">
+              <span class="hidden lg:inline font-medium">Dashboard</span>
+            </a>
+          
+            <!-- Inventory Link -->
+            <a href="inventory.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+              <img src="assets/svg/inventory.svg" class="[fill:currentColor] w-5 h-5 mr-3">
+              <span class="hidden lg:inline font-medium">Inventory</span>
+            </a>
+          
+            <!-- Partners Link -->
+            <a href="partners.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+              <img src="assets/svg/partners.svg" class="[fill:currentColor] w-5 h-5 mr-3">
+              <span class="hidden lg:inline font-medium">Partners</span>
+            </a>
+            <a href="prescription.html" class="px-4 py-2 bg-primary text-white cursor-pointer flex items-center text-gray-800">
+              <span class="mr-3"><img src="assets/svg/reports.svg"></span>
+              <span class="hidden lg:inline font-medium">Prescription</span>
+            </a>
+            <a href="reports.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+              <span class="mr-3"><img src="assets/svg/reports.svg"></span>
+              <span class="hidden lg:inline font-medium">Reports</span>
+            </a>
+            <a href="POS.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+              <span class="mr-3"><img src="assets/svg/POS.svg"></span>
+              <span class="hidden lg:inline font-medium">POS</span>
+            </a>
+          </nav>
+        </div>
+        <div class="flex-1 overflow-auto">
+          <div class="container mx-auto px-3 py-8">
+            <!-- Header with Button Group -->
+            <div class="flex justify-between items-start mb-8">
+              <div>
+                <h1 class="text-3xl font-bold text-gray-800">Prescriptions</h1>
+                <h3 class="text-lg text-gray-500 mt-1">Manage Patient Prescriptions</h3>
+              </div>
+              <div class="flex items-center space-x-3">
+                <!-- Notification and Profile -->
+                <div class="relative">
+                  <img src="assets/svg/notification.svg" class="w-8 h-8 text-gray-400 hover:text-primary cursor-pointer" alt="Notifications">
+                  <span class="absolute -top-1 -right-0 bg-red rounded-full w-3 h-3 border border-white"></span>
+                </div>
+                <img src="assets/svg/profile.svg" class="w-10 h-10 cursor-pointer" alt="Profile">
+              </div>
+            </div>  
+
+            <!-- Action Buttons -->
+            <div class="flex justify-between items-center w-full mb-4">
+              <div class="flex space-x-2 ml-auto">
+                <button class="border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-100">
+                  <span>+ Export</span>
+                </button>
+                <button id="add_prescription" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-600 flex items-center">
+                  <span>+ New Prescription</span>
+                </button>
+                <button id="openViewRequestsModal" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-600 flex items-center">
+                  View History
+                </button>
+              </div>
+            </div>
+
+          <!-- Search and Filters -->
+          <div class="grid grid-cols-1 md:grid-cols-8 gap-4 mb-6">
+            <!-- Enhanced Search Input -->
+            <div class="relative col-span-5">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+              </div>
+              <input 
+                type="text" 
+                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+                placeholder="Search prescriptions by patient name, doctor, or medication...">
+            </div>
+            <select class="px-3 py-2 border rounded-md">
+              <option>All Status</option>
+              <option>Pending</option>
+              <option>Filled</option>
+              <option>Expired</option>
+            </select>
+            <select class="px-4 py-2 border rounded-md">
+              <option>All Doctors</option>
+              <option>Dr. Smith</option>
+              <option>Dr. Johnson</option>
+            </select>
+            <select class="px-4 py-2 border rounded-md">
+              <option>Date Range</option>
+              <option>Today</option>
+              <option>This Week</option>
+              <option>This Month</option>
+            </select>
+          </div>
+
+          <!-- Prescriptions Table -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-200">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prescription ID</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <!-- Row 1 -->
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    RX-2025-001
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="font-medium text-gray-900">John Doe</div>
+                    <div class="text-sm text-gray-500">ID: PAT-001</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">Dr. Smith</div>
+                    <div class="text-sm text-gray-500">Cardiology</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    2025-06-15
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Filled</span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button class="text-blue-600 hover:text-blue-900 mr-3 view-item">View</button>
+                    <button class="text-blue-600 hover:text-blue-900 mr-3 edit-item">Edit</button>
+                    <button class="text-red-600 hover:text-red-900 delete-item">Void</button>
+                  </td>
+                </tr>
+                
+                <!-- Row 2 -->
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    RX-2025-002
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="font-medium text-gray-900">Jane Smith</div>
+                    <div class="text-sm text-gray-500">ID: PAT-002</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">Dr. Johnson</div>
+                    <div class="text-sm text-gray-500">Pediatrics</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    2025-06-16
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button class="text-blue-600 hover:text-blue-900 mr-3 view-item">View</button>
+                    <button class="text-blue-600 hover:text-blue-900 mr-3 edit-item">Edit</button>
+                    <button class="text-red-600 hover:text-red-900 delete-item">Void</button>
+                  </td>
+                </tr>
+                
+                <!-- Row 3 -->
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    RX-2025-003
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="font-medium text-gray-900">Robert Brown</div>
+                    <div class="text-sm text-gray-500">ID: PAT-003</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">Dr. Williams</div>
+                    <div class="text-sm text-gray-500">General Practice</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    2025-06-10
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Expired</span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button class="text-blue-600 hover:text-blue-900 mr-3 view-item">View</button>
+                    <button class="text-blue-600 hover:text-blue-900 mr-3 edit-item">Edit</button>
+                    <button class="text-red-600 hover:text-red-900 delete-item">Void</button>
+                  </td>
+                </tr>
+                
+                <!-- Row 4 -->
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    RX-2025-004
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="font-medium text-gray-900">Sarah Johnson</div>
+                    <div class="text-sm text-gray-500">ID: PAT-004</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">Dr. Smith</div>
+                    <div class="text-sm text-gray-500">Cardiology</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    2025-06-18
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Filled</span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button class="text-blue-600 hover:text-blue-900 mr-3 view-item">View</button>
+                    <button class="text-blue-600 hover:text-blue-900 mr-3 edit-item">Edit</button>
+                    <button class="text-red-600 hover:text-red-900 delete-item">Void</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="flex items-center justify-between mt-6">
+            <div class="text-sm text-gray-500">
+              Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">24</span> results
+            </div>
+            <div class="flex space-x-2">
+              <button class="px-3 py-1 border rounded-md text-gray-500 hover:bg-gray-300">Previous</button>
+              <button class="px-3 py-1 border rounded-md bg-primary text-white">1</button>
+              <button class="px-3 py-1 border rounded-md hover:bg-gray-300">2</button>
+              <button class="px-3 py-1 border rounded-md hover:bg-gray-300">Next</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modals -->
+
+        <!-- Prescription View Panel -->
+        <div id="viewPanel" class="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-white shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-2xl font-bold text-gray-800">View Prescription</h2>
+              <button id="closeViewPanel" class="text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Prescription Details -->
+            <div class="mb-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-3">Prescription Details</h3>
+              <div class="space-y-2">
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Prescription ID:</span>
+                  <span class="w-2/3 text-sm text-gray-900">RX-2023-001</span>
+                </div>
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Date Issued:</span>
+                  <span class="w-2/3 text-sm text-gray-900">June 15, 2023</span>
+                </div>
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Status:</span>
+                  <span class="w-2/3 text-sm text-gray-900">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Filled</span>
+                  </span>
+                </div>
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Expiry Date:</span>
+                  <span class="w-2/3 text-sm text-gray-900">July 15, 2023</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border-t border-gray-200 my-4"></div>
+            
+            <!-- Patient Information -->
+            <div class="mb-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-3">Patient Information</h3>
+              <div class="space-y-2">
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Patient Name:</span>
+                  <span class="w-2/3 text-sm text-gray-900">John Doe (ID: PAT-001)</span>
+                </div>
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Date of Birth:</span>
+                  <span class="w-2/3 text-sm text-gray-900">January 15, 1985</span>
+                </div>
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Allergies:</span>
+                  <span class="w-2/3 text-sm text-gray-900">Penicillin, Sulfa drugs</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border-t border-gray-200 my-4"></div>
+            
+            <!-- Doctor Information -->
+            <div class="mb-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-3">Prescribing Doctor</h3>
+              <div class="space-y-2">
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Doctor Name:</span>
+                  <span class="w-2/3 text-sm text-gray-900">Dr. Maria Santos</span>
+                </div>
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Specialty:</span>
+                  <span class="w-2/3 text-sm text-gray-900">Cardiology</span>
+                </div>
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">License Number:</span>
+                  <span class="w-2/3 text-sm text-gray-900">MD-123456</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border-t border-gray-200 my-4"></div>
+            
+            <!-- Medications -->
+            <div class="mb-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-3">Prescribed Medications</h3>
+              <div class="space-y-4">
+                <!-- Medication 1 -->
+                <div class="border border-gray-200 rounded-md p-4">
+                  <div class="flex justify-between">
+                    <span class="font-medium text-gray-900">Paracetamol 500mg</span>
+                    <span class="text-sm text-gray-500">30 tablets</span>
+                  </div>
+                  <div class="mt-2 text-sm text-gray-700">
+                    <div class="flex">
+                      <span class="w-1/3">Dosage:</span>
+                      <span class="w-2/3">1 tablet every 6 hours (4 times daily)</span>
+                    </div>
+                    <div class="flex mt-1">
+                      <span class="w-1/3">Duration:</span>
+                      <span class="w-2/3">7 days</span>
+                    </div>
+                    <div class="flex mt-1">
+                      <span class="w-1/3">Instructions:</span>
+                      <span class="w-2/3">Take with food if stomach upset occurs</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Medication 2 -->
+                <div class="border border-gray-200 rounded-md p-4">
+                  <div class="flex justify-between">
+                    <span class="font-medium text-gray-900">Amoxicillin 250mg</span>
+                    <span class="text-sm text-gray-500">20 capsules</span>
+                  </div>
+                  <div class="mt-2 text-sm text-gray-700">
+                    <div class="flex">
+                      <span class="w-1/3">Dosage:</span>
+                      <span class="w-2/3">1 capsule every 12 hours (2 times daily)</span>
+                    </div>
+                    <div class="flex mt-1">
+                      <span class="w-1/3">Duration:</span>
+                      <span class="w-2/3">10 days</span>
+                    </div>
+                    <div class="flex mt-1">
+                      <span class="w-1/3">Instructions:</span>
+                      <span class="w-2/3">Complete full course even if symptoms improve</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border-t border-gray-200 my-4"></div>
+            
+            <!-- Additional Information -->
+            <div class="mb-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-3">Additional Information</h3>
+              <div class="space-y-2">
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Doctor's Notes:</span>
+                  <span class="w-2/3 text-sm text-gray-900">Patient has history of mild hypertension. Monitor for adverse reactions.</span>
+                </div>
+                <div class="flex">
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Pharmacy Notes:</span>
+                  <span class="w-2/3 text-sm text-gray-900">Generic substitution made for amoxicillin. Patient counseled on administration.</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+              <button id="openEditModal" class="px-4 py-2 border border-gray-300 text-white rounded-md bg-primary hover:bg-blue-600">
+                Edit Prescription
+              </button>
+              <button id="printPrescription" class="px-4 py-2 border border-gray-300 text-white rounded-md bg-green-600 hover:bg-green-700">
+                Print Prescription
+              </button>
+              <button id="changeStatusBtn" class="px-4 py-2 border border-gray-300 text-white rounded-md bg-yellow-500 hover:bg-yellow-600">
+                Change Status
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Delete Confirmation Modal -->
+        <div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto mt-80">
+          <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay -->
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+              <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <!-- Modal content -->
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke=" red ">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3 class="text-lg leading-6 mt-1 font-medium text-gray-900" id=""   >
+                      Void Prescription
+                    </h3>
+                    <div class="mt-2">
+                      <p class="text-sm text-gray-500">
+                        Are you sure you want to void this prescription? If yes, state your reason.
+                      </p>
+                    </div>
+                    <div class="mt-2">
+                      <textarea id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Reason" rows="3" required></textarea>
+                    </div>
+                    <div class="mt-2">
+                      <p class="text-sm text-gray-500">
+                        This action cannot be undone.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button type="button" id="confirmDelete" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red text-base font-medium text-white hover:bg-red focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red sm:ml-3 sm:w-auto sm:text-sm ">
+                  Void
+                </button>
+                <button type="button" id="cancelDelete" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Prescription Form -->
+        <div id="editForm" class="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-white shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-2xl font-bold text-gray-800">Edit Prescription</h2>
+              <button id="closeEditForm" class="text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Prescription Details -->
+            <div class="mb-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-3">Prescription Details</h3>
+              <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Prescription ID</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md" value="RX-2023-001" readonly>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Date Issued</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md" value="2023-06-15" readonly>
+                  </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Patient</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md" value="John Doe (ID: PAT-001)" readonly>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Doctor</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 bg-gray-100 rounded-md" value="Dr. Smith" readonly>
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                  <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                    <option>Pending</option>
+                    <option selected>Filled</option>
+                    <option>Cancelled</option>
+                    <option>Expired</option>
+                  </select>
+                  <p class="mt-1 text-xs text-gray-500">Note: Changing status to 'Cancelled' is irreversible</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border-t border-gray-200 my-4"></div>
+            
+            <!-- Medications -->
+            <div class="mb-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-3">Medications</h3>
+              <div class="space-y-4">
+                <!-- Medication 1 -->
+                <div class="border border-gray-200 rounded-md p-4">
+                  <div class="grid grid-cols-2 gap-4 mb-3">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Medication</label>
+                      <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option selected>Paracetamol 500mg</option>
+                        <option>Amoxicillin 250mg</option>
+                        <option>Ibuprofen 400mg</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Dosage</label>
+                      <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md" value="1 tablet">
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Frequency</label>
+                      <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option>Once daily</option>
+                        <option selected>Twice daily</option>
+                        <option>Three times daily</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Duration</label>
+                      <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md" value="7 days">
+                    </div>
+                  </div>
+                  <button class="mt-3 text-red-600 hover:text-red-800 text-sm">Remove Medication</button>
+                </div>
+                
+                <!-- Medication 2 -->
+                <div class="border border-gray-200 rounded-md p-4">
+                  <div class="grid grid-cols-2 gap-4 mb-3">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Medication</label>
+                      <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option>Paracetamol 500mg</option>
+                        <option selected>Amoxicillin 250mg</option>
+                        <option>Ibuprofen 400mg</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Dosage</label>
+                      <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md" value="1 capsule">
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Frequency</label>
+                      <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option selected>Twice daily</option>
+                        <option>Once daily</option>
+                        <option>Three times daily</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1">Duration</label>
+                      <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md" value="10 days">
+                    </div>
+                  </div>
+                  <button class="mt-3 text-red-600 hover:text-red-800 text-sm">Remove Medication</button>
+                </div>
+                
+                <button class="px-3 py-1 border border-gray-300 rounded-md text-primary hover:bg-gray-50">
+                  + Add Another Medication
+                </button>
+              </div>
+            </div>
+            
+            <div class="border-t border-gray-200 my-4"></div>
+            
+            <!-- Additional Information -->
+            <div class="mb-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-3">Additional Information</h3>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Doctor's Notes</label>
+                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md" rows="3">Take after meals. Discontinue if rash appears.</textarea>
+              </div>
+              <div class="mt-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Pharmacy Notes</label>
+                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md" rows="2">Generic substitution allowed.</textarea>
+              </div>
+            </div>
+            
+            <!-- Form Actions -->
+            <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+              <button id="cancelEdit" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
+                Cancel
+              </button>
+              <button class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600">
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Partner Modal -->
+        <div id="partnerModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+          <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay -->
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+              <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            
+            <!-- Modal panel -->
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+              <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                    <div class="flex justify-between items-center mb-6">
+                      <h3 class="text-2xl font-bold text-gray-800">
+                        Add New Partner
+                      </h3>
+                      <button id="closePartnerModal" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                      </button>
+                    </div>
+                    
+                    <!-- Partner Form -->
+                    <form id="partnerForm" class="space-y-4">
+                      <!-- Basic Information -->
+                      <div class="border-b border-gray-200 pb-4">
+                        <h4 class="text-lg font-medium text-gray-900 mb-4">Basic Information</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label for="partnerName" class="block text-sm font-medium text-gray-700 mb-1">Partner Name*</label>
+                            <input type="text" id="partnerName" name="partnerName" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                          </div>
+                          <div>
+                            <label for="partnerType" class="block text-sm font-medium text-gray-700 mb-1">Partner Type*</label>
+                            <select id="partnerType" name="partnerType" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                              <option value="">Select Type</option>
+                              <option value="pharmacy">Pharmacy</option>
+                              <option value="supplier">Supplier</option>
+                              <option value="distributor">Distributor</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mt-4">
+                          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address*</label>
+                          <input type="email" id="email" name="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                      </div>
+                      
+                      <!-- Contact Information -->
+                      <div class="border-b border-gray-200 pb-4">
+                        <h4 class="text-lg font-medium text-gray-900 mb-4">Contact Information</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label for="contactPerson" class="block text-sm font-medium text-gray-700 mb-1">Contact Person*</label>
+                            <input type="text" id="contactPerson" name="contactPerson" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                          </div>
+                          <div>
+                            <label for="phoneNumber" class="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
+                            <input type="tel" id="phoneNumber" name="phoneNumber" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Location Information -->
+                      <div class="pb-4">
+                        <h4 class="text-lg font-medium text-gray-900 mb-4">Location Information</h4>
+                        <div class="mb-4">
+                          <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address*</label>
+                          <input type="text" id="address" name="address" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div>
+                            <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City*</label>
+                            <input type="text" id="city" name="city" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                          </div>
+                          <div>
+                            <label for="region" class="block text-sm font-medium text-gray-700 mb-1">Region*</label>
+                            <input type="text" id="region" name="region" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                          </div>
+                          <div>
+                            <label for="postalCode" class="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
+                            <input type="text" id="postalCode" name="postalCode" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Status -->
+                      <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+                        <select id="status" name="status" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
+                          <option value="pending">Pending Approval</option>
+                        </select>
+                      </div>
+                      
+                      <!-- Form Actions -->
+                      <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                        <button type="button" id="cancelPartner" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
+                          Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600">
+                          Save Partner
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prescription History Modal -->
+        <div id="viewRequestsModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+          <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Background overlay -->
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+              <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            
+            <!-- Modal panel -->
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-6xl sm:w-full">
+              <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                    <div class="flex justify-between items-center mb-6">
+                      <h3 class="text-2xl font-bold text-gray-800">Prescription History</h3>
+                      <button id="closeViewRequestsModal" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                      </button>
+                    </div>
+                    
+                    <!-- Filters -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                          <option>All Statuses</option>
+                          <option>Pending</option>
+                          <option>Filled</option>
+                          <option>Expired</option>
+                          <option>Cancelled</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Doctor</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                          <option>All Doctors</option>
+                          <option>Dr. Smith</option>
+                          <option>Dr. Johnson</option>
+                          <option>Dr. Williams</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Date Range</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                          <option>Last 7 days</option>
+                          <option>Last 30 days</option>
+                          <option>Last 90 days</option>
+                          <option>Custom range</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Patient</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                          <option>All Patients</option>
+                          <option>John Doe</option>
+                          <option>Jane Smith</option>
+                          <option>Robert Brown</option>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <!-- Prescriptions Table -->
+                    <div class="overflow-x-auto">
+                      <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                          <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prescription ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Medications</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                          <!-- Sample Prescription 1 -->
+                          <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RX-2023-001</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                              <div class="text-sm text-gray-900">John Doe</div>
+                              <div class="text-sm text-gray-500">ID: PAT-001</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                              <div class="text-sm text-gray-900">Dr. Smith</div>
+                              <div class="text-sm text-gray-500">Cardiology</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              2023-06-15
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">
+                              <div>Paracetamol 500mg (1 tablet, 3x/day)</div>
+                              <div class="text-xs text-gray-400">Amoxicillin 250mg (1 capsule, 2x/day)</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Filled</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                              <button class="text-primary hover:text-blue-700 mr-2">View</button>
+                              <button class="text-red-600 hover:text-red-900">Cancel</button>
+                            </td>
+                          </tr>
+                          
+                          <!-- Sample Prescription 2 -->
+                          <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">RX-2023-002</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                              <div class="text-sm text-gray-900">Jane Smith</div>
+                              <div class="text-sm text-gray-500">ID: PAT-002</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                              <div class="text-sm text-gray-900">Dr. Johnson</div>
+                              <div class="text-sm text-gray-500">Pediatrics</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              2023-06-16
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">
+                              <div>Ibuprofen 400mg (1 tablet, 2x/day)</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                              <button class="text-primary hover:text-blue-700 mr-2">View</button>
+                              <button class="text-red-600 hover:text-red-900">Cancel</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-between mt-6">
+                      <div class="text-sm text-gray-500">
+                        Showing <span class="font-medium">1</span> to <span class="font-medium">2</span> of <span class="font-medium">8</span> prescriptions
+                      </div>
+                      <div class="flex space-x-2">
+                        <button class="px-3 py-1 border rounded-md text-gray-500 hover:bg-gray-50">Previous</button>
+                        <button class="px-3 py-1 border rounded-md bg-primary text-white">1</button>
+                        <button class="px-3 py-1 border rounded-md hover:bg-gray-50">2</button>
+                        <button class="px-3 py-1 border rounded-md hover:bg-gray-50">3</button>
+                        <button class="px-3 py-1 border rounded-md hover:bg-gray-50">Next</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View Prescription Modal (hidden by default) -->
+        <div id="viewPrescriptionModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+          <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+              <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+              <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                    <div class="flex justify-between items-center mb-6">
+                      <h3 class="text-2xl font-bold text-gray-800">Prescription Details</h3>
+                      <button id="closeViewPrescriptionModal" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                      </button>
+                    </div>
+                    
+                    <!-- Prescription Details -->
+                    <div class="space-y-4">
+                      <div class="grid grid-cols-2 gap-4">
+                        <div>
+                          <label class="block text-sm font-medium text-gray-500">Prescription ID</label>
+                          <p class="mt-1 text-sm text-gray-900">RX-2023-001</p>
+                        </div>
+                        <div>
+                          <label class="block text-sm font-medium text-gray-500">Date</label>
+                          <p class="mt-1 text-sm text-gray-900">June 15, 2023</p>
+                        </div>
+                      </div>
+                      
+                      <div class="grid grid-cols-2 gap-4">
+                        <div>
+                          <label class="block text-sm font-medium text-gray-500">Patient</label>
+                          <p class="mt-1 text-sm text-gray-900">John Doe (ID: PAT-001)</p>
+                        </div>
+                        <div>
+                          <label class="block text-sm font-medium text-gray-500">Doctor</label>
+                          <p class="mt-1 text-sm text-gray-900">Dr. Smith (Cardiology)</p>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label class="block text-sm font-medium text-gray-500">Status</label>
+                        <p class="mt-1">
+                          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Filled</span>
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <label class="block text-sm font-medium text-gray-500">Medications</label>
+                        <div class="mt-2 border border-gray-200 rounded-md divide-y divide-gray-200">
+                          <div class="px-4 py-3">
+                            <div class="flex justify-between">
+                              <span class="text-sm font-medium text-gray-900">Paracetamol 500mg</span>
+                              <span class="text-sm text-gray-500">3 tablets</span>
+                            </div>
+                            <div class="mt-1 text-sm text-gray-500">Take 1 tablet every 8 hours (3 times daily) for 7 days</div>
+                          </div>
+                          <div class="px-4 py-3">
+                            <div class="flex justify-between">
+                              <span class="text-sm font-medium text-gray-900">Amoxicillin 250mg</span>
+                              <span class="text-sm text-gray-500">14 capsules</span>
+                            </div>
+                            <div class="mt-1 text-sm text-gray-500">Take 1 capsule every 12 hours (2 times daily) for 7 days</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label class="block text-sm font-medium text-gray-500">Notes</label>
+                        <p class="mt-1 text-sm text-gray-900">Take after meals. Discontinue if rash appears.</p>
+                      </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end">
+                      <button id="printPrescription" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600">
+                        Print Prescription
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+   
+</body>
+<!-- External CSS -->
+<script src="assets/js/admin_dashboard.js"></script>
+<script src="assets/js/prescription.js"></script>
+</html>
