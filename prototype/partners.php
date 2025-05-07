@@ -16,7 +16,8 @@
                   warning: '#F59E0B',
                   success: '#10B981',
                   red: '#EF4444',
-                  faded_red: '#FFEFEF'
+                  faded_red: '#FFEFEF',
+                  bg_sidebar: '#F3F4F6'
                   }
               }
               }
@@ -25,46 +26,54 @@
       </head>
       <body class="bg-gray-50 flex h-screen">
         <!-- Collapsible Sidebar -->
-        <div class="bg-gray-200 text-white w-64 md:w-20 lg:w-64 transition-all duration-300 ease-in-out flex-shrink-0">
-          <div class="p-4 flex items-center justify-between md:justify-center lg:justify-between">
-            <span class="text-xl font-bold hidden md:hidden lg:inline"> <img src="assets/svg/logo.png" alt="Menu" class="w-30 h-10"> </span>
-            <button id="toggleSidebar" class="text-white focus:outline-none hidden md:block lg:hidden">
-                <img src="assets/svg/menu.svg" alt="Menu" class="w-6 h-6">
-            </button>
-            <button id="toggleSidebarDesktop" class="text-white focus:outline-none hidden md:hidden lg:block">
-                <img src="assets/svg/menu.svg" alt="Toggle Sidebar" class="w-9 h-9 toggle-icon">
-                <img src="assets/svg/menu.svg" alt="Toggle Sidebar" class="w-4 h-4 toggle-icon hidden">
-            </button>
-          </div>
+        <div class="bg-bg_sidebar text-white w-64 md:w-20 lg:w-64 transition-all duration-300 ease-in-out flex-shrink-0">
+          <nav class="border-gray-200 bg-gray-20 ">
+            <div class="max-w-screen-xl bg-bg_sidebar flex flex-wrap items-center justify-between mx-auto p-4 border-b-2">
+              <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+                  <img src="assets/svg/logo.png" class="h-10" alt="Sugbodoc Logo" />
+                  <span class="self-center text-2xl fon t-semibold whitespace-nowrap dark:text-white"></span>
+              </a>
+              <button id="toggleSidebar" data-collapse-toggle="navbar-hamburger" type="button" class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-200 " aria-controls="navbar-hamburger" aria-expanded="false">
+                <svg class="w-10 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    <path stroke="#4454C3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                </svg>
+              </button>
+
+            </div>
+          </nav>
+
           <nav class="mt-6">
-            <!-- Dashboard Link -->
-            <a href="admin_dashboard.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+            <a href="dashboard.php" class="px-9 py-3 hover:bg-primary cursor-pointer flex items-center text-gray-800 hover:bg-sidebar_hover hover:text-white">
               <img src="assets/svg/dashboard.svg" class="[fill:currentColor] w-5 h-5 mr-3">
               <span class="hidden lg:inline font-medium">Dashboard</span>
             </a>
-          
-            <!-- Inventory Link -->
-            <a href="inventory.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+            <a href="inventory.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
               <img src="assets/svg/inventory.svg" class="[fill:currentColor] w-5 h-5 mr-3">
               <span class="hidden lg:inline font-medium">Inventory</span>
             </a>
-          
-            <!-- Partners Link -->
-            <a href="partners.html" class="px-4 py-2 bg-primary text-white cursor-pointer flex items-center text-gray-800">
+            <a href="partners.php" class="px-9 py-3 bg-primary hover:bg-gray-200 hover:text-gray-800 cursor-pointer flex items-center text-white">
               <img src="assets/svg/partners.svg" class="[fill:currentColor] w-5 h-5 mr-3">
               <span class="hidden lg:inline font-medium">Partners</span>
             </a>
-            <a href="prescription.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+            <a href="prescription.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
               <span class="mr-3"><img src="assets/svg/reports.svg"></span>
               <span class="hidden lg:inline font-medium">Prescription</span>
             </a>
-            <a href="reports.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+            <a href="reports.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
               <span class="mr-3"><img src="assets/svg/reports.svg"></span>
               <span class="hidden lg:inline font-medium">Reports</span>
             </a>
-            <a href="POS.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+            <a href="POS.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
               <span class="mr-3"><img src="assets/svg/POS.svg"></span>
               <span class="hidden lg:inline font-medium">POS</span>
+            </a>
+            <a href="settings.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+              <span class="mr-3"><img src="assets/svg/reports.svg"></span>
+              <span class="hidden lg:inline font-medium">Settings</span>
+            </a>
+            <a href="POS.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+              <span class="mr-3"><img src="assets/svg/POS.svg"></span>
+              <span class="hidden lg:inline font-medium">Logout</span>
             </a>
           </nav>
         </div>
@@ -436,7 +445,6 @@
                     <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
                       <option>Active</option>
                       <option>Inactive</option>
-                      <option>Pending Approval</option>
                     </select>
                   </div>
                 </div>
@@ -759,6 +767,6 @@
         </div>
 </body>
 <!-- External CSS -->
-<script src="assets/js/admin_dashboard.js"></script>
+<script src="assets/js/dashboard.js"></script>
 <script src="assets/js/partners.js"></script>
 </html>

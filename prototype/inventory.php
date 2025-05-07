@@ -16,7 +16,8 @@
                   warning: '#F59E0B',
                   success: '#10B981',
                   red: '#EF4444',
-                  faded_red: '#FFEFEF'
+                  faded_red: '#FFEFEF',
+                  bg_sidebar: '#F3F4F6'
                   }
               }
               }
@@ -25,56 +26,57 @@
       </head>
       <body class="bg-gray-50 flex h-screen">
         <!-- Collapsible Sidebar -->
-        <div class="bg-gray-200 text-white w-64 md:w-20 lg:w-64 transition-all duration-300 ease-in-out flex-shrink-0">
-          <div class="p-4 flex items-center justify-between md:justify-center lg:justify-between">
-            <span class="text-xl font-bold hidden md:hidden lg:inline"> <img src="assets/svg/logo.png" alt="Menu" class="w-30 h-10"> </span>
-            <button id="toggleSidebar" class="text-white focus:outline-none hidden md:block lg:hidden">
-                <img src="assets/svg/menu.svg" alt="Menu" class="w-6 h-6">
-            </button>
-            <button id="toggleSidebarDesktop" class="text-white focus:outline-none hidden md:hidden lg:block">
-                <img src="assets/svg/menu.svg" alt="Toggle Sidebar" class="w-9 h-9 toggle-icon">
-                <img src="assets/svg/menu.svg" alt="Toggle Sidebar" class="w-4 h-4 toggle-icon hidden">
-            </button>
-          </div>
+        <div class="bg-bg_sidebar text-white w-64 md:w-20 lg:w-64 transition-all duration-300 ease-in-out flex-shrink-0">
+          <nav class="border-gray-200 bg-gray-20 ">
+            <div class="max-w-screen-xl bg-bg_sidebar flex flex-wrap items-center justify-between mx-auto p-4 border-b-2">
+              <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+                  <img src="assets/svg/logo.png" class="h-10" alt="Sugbodoc Logo" />
+                  <span class="self-center text-2xl fon t-semibold whitespace-nowrap dark:text-white"></span>
+              </a>
+              <button id="toggleSidebar" data-collapse-toggle="navbar-hamburger" type="button" class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-200 " aria-controls="navbar-hamburger" aria-expanded="false">
+                <svg class="w-10 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    <path stroke="#4454C3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                </svg>
+              </button>
+
+            </div>
+          </nav>
+
           <nav class="mt-6">
-            <!-- Dashboard -->
-            <a href="admin_dashboard.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+            <a href="dashboard.php" class="px-9 py-3 cursor-pointer hover:bg-primary flex items-center text-gray-800 hover:bg-sidebar_hover hover:text-white">
               <img src="assets/svg/dashboard.svg" class="[fill:currentColor] w-5 h-5 mr-3">
               <span class="hidden lg:inline font-medium">Dashboard</span>
             </a>
-          
-            <!-- Inventory  -->
-            <a href="inventory.html" class="px-4 py-2 bg-primary text-white cursor-pointer flex items-center text-gray-800">
+            <a href="inventory.php" class="px-9 py-3 hover:bg-gray-200 bg-primary hover:text-gray-800 cursor-pointer flex items-center text-white">
               <img src="assets/svg/inventory.svg" class="[fill:currentColor] w-5 h-5 mr-3">
               <span class="hidden lg:inline font-medium">Inventory</span>
             </a>
-          
-            <!-- Partners  -->
-            <a href="partners.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+            <a href="partners.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
               <img src="assets/svg/partners.svg" class="[fill:currentColor] w-5 h-5 mr-3">
               <span class="hidden lg:inline font-medium">Partners</span>
             </a>
-
-            <!-- Reports  -->
-            <a href="prescription.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+            <a href="prescription.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
               <span class="mr-3"><img src="assets/svg/reports.svg"></span>
               <span class="hidden lg:inline font-medium">Prescription</span>
             </a>
-
-            <!-- Reports -->
-            <a href="reports.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+            <a href="reports.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
               <span class="mr-3"><img src="assets/svg/reports.svg"></span>
               <span class="hidden lg:inline font-medium">Reports</span>
             </a>
-
-            <!-- Point of Sale -->
-            <a href="POS.html" class="px-4 py-2 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+            <a href="POS.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
               <span class="mr-3"><img src="assets/svg/POS.svg"></span>
               <span class="hidden lg:inline font-medium">POS</span>
             </a>
+            <a href="settings.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+              <span class="mr-3"><img src="assets/svg/reports.svg"></span>
+              <span class="hidden lg:inline font-medium">Settings</span>
+            </a>
+            <a href="POS.php" class="px-9 py-3 hover:bg-primary hover:text-white cursor-pointer flex items-center text-gray-800">
+              <span class="mr-3"><img src="assets/svg/POS.svg"></span>
+              <span class="hidden lg:inline font-medium">Logout</span>
+            </a>
           </nav>
         </div>
-
         <div class="flex-1 overflow-auto">
           <div class="container mx-auto px-3 py-8">
             <!-- Header with Button Group -->
@@ -133,13 +135,13 @@
               <option>Antihypertensive</option>
             </select>
             <select class="px-4 py-2 border rounded-md">
-              <option>Suppliers</option>
+              <option>All Suppliers</option>
               <option>PharmacCorp</option>
               <option>MediSupply</option>
             </select>
             <select class="px-4 py-2 border rounded-md">
               <option>Status</option>
-              <option>Sample status</option>
+              <option></option>
             </select>
           </div>
         
@@ -279,22 +281,45 @@
               </button>
             </div>
             
-            <!-- Inventory Type -->
+            <!-- Inventory Type  -->
             <div class="mb-6">
-              <h3 class="text-lg font-medium text-gray-900 mb-3">Inventory Type</h3>
-              <div class="flex space-x-4">
-                <label class="inline-flex items-center">
-                  <input type="radio" name="internal_type" class="form-radio text-primary" checked>
-                  <span class="ml-2">Medication</span>
+              <h3 class="text-lg font-medium text-gray-900 mb-3">Category</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Medication -->
+                <label class="flex items-start p-3 border rounded-lg hover:bg-gray-50" data-snomed="105590001" data-fhir="Medication">
+                  <input type="radio" name="internal_type" value="medication" class="mt-1 form-radio text-primary" checked>
+                  <div class="ml-3">
+                    <span class="block font-medium">Medication</span>
+                    <span class="block text-sm text-gray-500">Drugs, vaccines, biologics</span>
+                  </div>
                 </label>
-                <label class="inline-flex items-center">
-                  <input type="radio" name="internal_type" class="form-radio text-primary">
-                  <span class="ml-2">Equipment</span>
+                
+                <!-- Medical Devices -->
+                <label class="flex items-start p-3 border rounded-lg hover:bg-gray-50" data-snomed="49062001" data-fhir="Device">
+                  <input type="radio" name="internal_type" value="medical_device" class="mt-1 form-radio text-primary">
+                  <div class="ml-3"> 
+                    <span class="block font-medium">Medical Devices</span>
+                    <span class="block text-sm text-gray-500">Equipment, instruments, implants</span>
+                  </div>
                 </label>
-                <label class="inline-flex items-center">
-                  <input type="radio" name="internal_type" class="form-radio text-primary">
-                  <span class="ml-2">Consumables</span>
+
+                <!-- Clinical Consumables -->
+                <label class="flex items-start p-3 border rounded-lg hover:bg-gray-50" data-snomed="385420005" data-fhir="Device">
+                  <input type="radio" name="internal_type" value="clinical_consumables" class="mt-1 form-radio text-primary">
+                  <div class="ml-3">
+                    <span class="block font-medium">Clinical Consumables</span>
+                    <span class="block text-sm text-gray-500">Gloves, syringes, dressings</span>
+                  </div>
                 </label>
+
+                <!-- Patient Support Items -->
+                <label class="flex items-start p-3 border rounded-lg hover:bg-gray-50" data-snomed="720516007" data-fhir="SupplyDelivery">
+                  <input type="radio" name="internal_type" value="patient_support" class="mt-1 form-radio text-primary">
+                  <div class="ml-3">
+                    <span class="block font-medium">Patient Support</span>
+                    <span class="block text-sm text-gray-500">Water, nutrition, comfort items</span>
+                  </div>
+                </label> 
               </div>
             </div>
             
@@ -371,19 +396,51 @@
             
             <!-- Status -->
             <div class="mb-6">
-              <h3 class="text-lg font-medium text-gray-900 mb-3">Status</h3>
-              <div class="flex space-x-4">
-                <label class="inline-flex items-center">
-                  <input type="radio" name="internal_status" class="form-radio text-primary" checked>
-                  <span class="ml-2">Active</span>
+              <h3 class="text-lg font-medium text-gray-900 mb-3">Inventory Status</h3>
+              <div class="flex flex-wrap gap-4">
+                <!-- Active -->
+                <label class="flex items-center">
+                  <input type="radio" name="inventory_status" value="active" class="form-radio text-primary" checked>
+                  <span class="ml-2">
+                    <span class="block font-medium">Active</span>
+                    <!-- <span class="block text-sm text-gray-500">Available for use</span> -->
+                  </span>
                 </label>
-                <label class="inline-flex items-center">
-                  <input type="radio" name="internal_status" class="form-radio text-primary">
-                  <span class="ml-2">Inactive</span>
+
+                <!-- Inactive -->
+                <label class="flex items-center">
+                  <input type="radio" name="inventory_status" value="inactive" class="form-radio text-primary">
+                  <span class="ml-2">
+                    <span class="block font-medium">Inactive</span>
+                    <!-- <span class="block text-sm text-gray-500">Discontinued/retired</span> -->
+                  </span>
                 </label>
-                <label class="inline-flex items-center">
-                  <input type="radio" name="internal_status" class="form-radio text-primary">
-                  <span class="ml-2">Quarantined</span>
+
+                <!-- Quarantined -->
+                <label class="flex items-center">
+                  <input type="radio" name="inventory_status" value="quarantined" class="form-radio text-primary">
+                  <span class="ml-2">
+                    <span class="block font-medium">Quarantined</span>
+                    <!-- <span class="block text-sm text-gray-500">Under quality review</span> -->
+                  </span>
+                </label>
+
+                <!-- Expired (Recommended Addition) -->
+                <label class="flex items-center">
+                  <input type="radio" name="inventory_status" value="expired" class="form-radio text-primary">
+                  <span class="ml-2">
+                    <span class="block font-medium">Expired</span>
+                    <!-- <span class="block text-sm text-gray-500">Past shelf life</span> -->
+                  </span>
+                </label>
+
+                <!-- Recalled (For Compliance) -->
+                <label class="flex items-center">
+                  <input type="radio" name="inventory_status" value="recalled" class="form-radio text-primary">
+                  <span class="ml-2">
+                    <span class="block font-medium">Recalled</span>
+                    <!-- <span class="block text-sm text-gray-500">Manufacturer recall</span> -->
+                  </span>
                 </label>
               </div>
             </div>
@@ -412,23 +469,21 @@
               </button>
             </div>
             
-            <!-- Inventory Type -->
-            <div class="mb-6">
-              <h3 class="text-lg font-medium text-gray-900 mb-3">Inventory Type</h3>
-              <div class="flex space-x-4">
-                <label class="inline-flex items-center">
-                  <input type="radio" name="external_type" class="form-radio text-primary" checked>
-                  <span class="ml-2">Medication</span>
-                </label>
-                <label class="inline-flex items-center">
-                  <input type="radio" name="external_type" class="form-radio text-primary">
-                  <span class="ml-2">Equipment</span>
-                </label>
-                <label class="inline-flex items-center">
-                  <input type="radio" name="external_type" class="form-radio text-primary">
-                  <span class="ml-2">Consumables</span>
-                </label>
-              </div>
+           <!-- Inventory Type  -->
+           <div class="mb-6">
+            <h3 class="text-lg font-medium text-gray-900 mb-3">Category</h3>
+              <div>
+                  <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                    <option>Select Category</option>   
+                    <option>Medication</option>
+                    <option>Medical Equipments</option>
+                    <option>Clinical Consumables</option>
+                    <option>Patient Support</option>
+                  </select>
+                  <div class="px-3 py-2 text-blue-500">
+                    <a href="" >+ Add Category</a>
+                  </div>
+                </div>
             </div>
             
             <div class="border-t border-gray-200 my-4"></div>
@@ -541,7 +596,7 @@
               <h3 class="text-lg font-medium text-gray-900 mb-3">Product Details</h3>
               <div class="space-y-2">
                 <div class="flex">
-                  <span class="w-1/3 text-sm font-medium text-gray-500">Inventory Type:</span>
+                  <span class="w-1/3 text-sm font-medium text-gray-500">Category:</span>
                   <span class="w-2/3 text-sm text-gray-900">Medication</span>
                 </div>
                 <div class="flex">
@@ -604,7 +659,7 @@
                 </div>
                 <div class="flex">
                   <span class="w-1/3 text-sm font-medium text-gray-500">Supplier:</span>
-                  <span class="w-2/3 text-sm text-gray-900">MedSupply Co. (vendor@medsupply.com)</span>
+                  <span class="w-2/3 text-sm text-gray-900">Supplier 1 (supplier@sample.com)</span>
                 </div>
                 <div class="flex">
                   <span class="w-1/3 text-sm font-medium text-gray-500">Regulatory:</span>
@@ -692,6 +747,7 @@
                             <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
                               <option>Select transfer type</option>
                               <option>Internal Transfer</option>
+                              <option>External Transfer</option>
                               <option>Return to Supplier</option>
                               <option>Branch Transfer</option>
                             </select>
@@ -921,9 +977,9 @@
                             <tr>
                               <td class="px-6 py-4 whitespace-nowrap">
                                 <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                                  <option>MedSupply Co</option>
-                                  <option>PharmaDist Inc</option>
-                                  <option>Global Meds</option>
+                                  <option>Supplier 1</option>
+                                  <option>Supplier 2</option>
+                                  <option>Supplier 3</option>
                                 </select>
                               </td>
                               <td class="px-6 py-4 whitespace-nowrap">
@@ -1069,7 +1125,7 @@
                           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-06-15 11:00</td>
                           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Restock</td>
                           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Pharmacist John</td>
-                          <td class="px-6 py-4 text-sm text-gray-500">From MedSupply Co</td>
+                          <td class="px-6 py-4 text-sm text-gray-500">Supplier 1</td>
                           <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600">+100</td>
                         </tr>
                         <!-- Row 4 -->
@@ -1272,8 +1328,9 @@
                   <label class="block text-sm font-medium text-gray-700 mb-1">Inventory Type</label>
                   <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
                     <option>Medication</option>
-                    <option>Equipment</option>
-                    <option>Consumables</option>
+                    <option>Medical Devices</option>
+                    <option>Clinical Consumables</option>
+                    <option>Patient Support</option>
                   </select>
                 </div>
                 <div>
@@ -1283,7 +1340,7 @@
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md" rows="3">Pain reliever, 100-tablet bottles</textarea>
+                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md" rows="3">Pain reliever</textarea>
               </div>
             </div>
           </div>
@@ -1327,9 +1384,9 @@
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Supplier</label>
                 <select class="w-full px-3 py-2 border border-gray-300 rounded-md">
-                  <option>MedSupply Co.</option>
-                  <option>PharmaDist Inc</option>
-                  <option>Global Meds</option>
+                  <option>Supplier 1</option>
+                  <option>Supplier 2</option>
+                  <option>Supplier 3</option>
                 </select>
               </div>
               <div>
@@ -1378,7 +1435,7 @@
                   </h3>
                   <div class="mt-2">
                     <p class="text-sm text-gray-500">
-                      Are you sure you want to delete this item? This action cannot be undone.
+                      Are you sure you want to Remove this item? This action cannot be undone.
                     </p>
                   </div>
                 </div>
@@ -1397,6 +1454,6 @@
       </div>
 </body>
 <!-- External CSS -->
-<script src="assets/js/admin_dashboard.js"></script>
+<script src="assets/js/dashboard.js"></script>
 <script src="assets/js/inventory.js"></script>
 </html>
